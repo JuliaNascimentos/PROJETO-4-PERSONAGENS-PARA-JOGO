@@ -1,13 +1,26 @@
-class Mage {
+const Character = require('./Character')
 
-constructor(name, lifePoints, attackPts, defensePts, magicPts) {
+class Mage extends Character{
+    constructor(name, lifepoints, attackPts, defensePts, magicPts) {
+        super(name, lifepoints, attackPts, defensePts)
+        this.magicPts = magicPts
+    }
+    
+    attack_mages(target) {
+        const damage = this.attackPts + this.magicPts - target.defensePts
+        if (damage > 0) {
+          target.lifepoints -= damage
+          console.log(`${this.name} atacou ${target.name} causando ${damage} de dano!`)
+        } else {
+          console.log(`${this.name} atacou ${target.name}, mas o ataque foi ineficaz!`)
+        }
+    }
 
-    this.name = name
-    this.lifePoints = lifePoints
-    this.attackPts = attackPts
-    this.defensePts = defensePts
-    this.magicPts = magicPts
+    heal_mage(target) {
+      const healing = 2 * this.magicPts
+      target.lifepoints += healing
+      console.log(`${this.name} curou ${target.name} em ${healing} pontos de vida!`)
+    }
 }
 
-
-}
+module.exports = Mage
